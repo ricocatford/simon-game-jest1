@@ -28,13 +28,13 @@ h2 {
 .circle1 {
     height: 500px;
     width: 500px;
-    background-color: #009FE3;
+    background-color: #7b0067;
 }
 
 .circle2 {
     height: 400px;
     width: 400px;
-    background-color: #445261;
+    background-color: #117200;
     top: 50px;
     left: 50px;
 }
@@ -83,5 +83,5 @@ h2 {
 }
 
 .light {
-    opacity: 0.4;
+    filter: brightness(85%);
 }

@@ -2,7 +2,9 @@
  * @jest-environment jsdom
  */
 
-const { game, newGame, showScore, addTurn, lightsOn, showTurns } = require("../game");
+const { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn } = require("../game");
+
+jest.spyOn(window, "alert").mockImplementation(() => { });
 
 beforeAll(() => {
     let fs = require("fs");
@@ -53,6 +55,12 @@ describe("newGame works correctly", () => {
     test("should add one move to the computer's game array", () => {
         expect(game.currentGame.length).toBe(1);
     });
+    test("expect data-listener to be true", () => {
+        const elements = document.getElementsByClassName("circle");
+        for (let element of elements) {
+            expect(element.getAttribute("data-listener")).toEqual("true");
+        }
+    });
 });
 
 describe("gameplay works correctly", () => {
@@ -81,4 +89,15 @@ describe("gameplay works correctly", () => {
         showTurns();
         expect(game.turnNumber).toBe(0);
     });
+    test("should increment the score if the player move is correct", () => {
+        game.playerMoves.push(game.currentGame[0]);
+        playerTurn();
+        expect(game.score).toBe(1);
+    });
+    test("should call an alert if the wrong is move", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong move!");
+    });
 });
+
